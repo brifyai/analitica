@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://tvradio2.netlify.app/</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://tvradio2.netlify.app/og-image.jpg</image:loc>
+      <image:title>iMetrics - Análisis Inteligente de Métricas</image:title>
+      <image:caption>Herramienta líder en Chile para análisis inteligente de métricas y analytics</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Dashboard -->
+  <url>
+    <loc>https://tvradio2.netlify.app/dashboard</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Analytics -->
+  <url>
+    <loc>https://tvradio2.netlify.app/analytics</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Spot Analysis -->
+  <url>
+    <loc>https://tvradio2.netlify.app/spot-analysis</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Properties -->
+  <url>
+    <loc>https://tvradio2.netlify.app/properties</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Settings -->
+  <url>
+    <loc>https://tvradio2.netlify.app/settings</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Frases Radio -->
+  <url>
+    <loc>https://tvradio2.netlify.app/frases-radio</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Login -->
+  <url>
+    <loc>https://tvradio2.netlify.app/login</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Register -->
+  <url>
+    <loc>https://tvradio2.netlify.app/register</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://tvradio2.netlify.app/privacy</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Terms of Service -->
+  <url>
+    <loc>https://tvradio2.netlify.app/terms</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Cookie Policy -->
+  <url>
+    <loc>https://tvradio2.netlify.app/cookies</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

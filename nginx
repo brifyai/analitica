@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# Script para configurar nginx proxy para imetrics.cl
+# Ejecutar en el servidor 147.93.182.94 con permisos de root
+
+echo "🔧 Configurando nginx proxy para imetrics.cl..."
+
+# Instalar nginx si no está instalado
+if ! command -v nginx &> /dev/null; then
+    echo "📦 Instalando nginx..."
+    apt update
+    apt install -y nginx
+fi
+
+# Crear configuración nginx para imetrics.cl
+cat > /etc/nginx/sites-available/imetrics.cl << 'EOF'
+server {
+    listen 80;
+    server_name imetrics.cl www.imetrics.cl;
+    
+    # Redirigir HTTP a HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name imetrics.cl www.imetrics.cl;
+    
+    # Configuración SSL (Let's Encrypt)
+    ssl_certificate /etc/letsencrypt/live/imetrics.cl/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/imetrics.cl/privkey.pem;
+    
+    # Configuraciones SSL seguras
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    
+    # Headers de seguridad
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload";
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+    add_header X-XSS-Protection "1; mode=block";
+    
+    # Proxy a la aplicación Coolify
+    location / {
+        proxy_pass http://v8g48ggkk8wko4480s8kk4ok.147.93.182.94.sslip.io;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+    }
+    
+    # Logs
+    access_log /var/log/nginx/imetrics.cl.access.log;
+    error_log /var/log/nginx/imetrics.cl.error.log;
+}
+EOF
+
+# Habilitar el sitio
+ln -sf /etc/nginx/sites-available/imetrics.cl /etc/nginx/sites-enabled/
+
+# Deshabilitar sitio por defecto si existe
+rm -f /etc/nginx/sites-enabled/default
+
+# Verificar configuración nginx
+echo "🔍 Verificando configuración nginx..."
+nginx -t
+
+if [ $? -eq 0 ]; then
+    echo "✅ Configuración nginx válida"
+    
+    # Reiniciar nginx
+    echo "🔄 Reiniciando nginx..."
+    systemctl restart nginx
+    systemctl enable nginx
+    
+    echo "✅ Nginx configurado exitosamente para imetrics.cl"
+else
+    echo "❌ Error en la configuración nginx"
+    exit 1
+fi
+
+echo "🎯 Próximo paso: Configurar SSL con Let's Encrypt"

@@ -1,0 +1,127 @@
+# 🚀 GUÍA COMPLETA: CONFIGURAR NGINX Y SSL PARA IMETRICS.CL
+
+## 🎯 **PROBLEMA IDENTIFICADO**
+
+La aplicación está funcionando perfectamente en Coolify, pero el servidor 147.93.182.94 no tiene configurado nginx para servir imetrics.cl.
+
+## 📋 **INSTRUCCIONES PASO A PASO**
+
+### **PASO 1: Acceder al servidor**
+```bash
+ssh root@147.93.182.94
+```
+
+### **PASO 2: Instalar nginx**
+```bash
+apt update
+apt install -y nginx
+```
+
+### **PASO 3: Crear configuración nginx**
+```bash
+nano /etc/nginx/sites-available/imetrics.cl
+```
+
+**Contenido del archivo:**
+```nginx
+server {
+    listen 80;
+    server_name imetrics.cl www.imetrics.cl;
+    
+    # Redirigir HTTP a HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name imetrics.cl www.imetrics.cl;
+    
+    # Configuración SSL (Let's Encrypt)
+    ssl_certificate /etc/letsencrypt/live/imetrics.cl/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/imetrics.cl/privkey.pem;
+    
+    # Configuraciones SSL seguras
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    
+    # Headers de seguridad
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload";
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+    add_header X-XSS-Protection "1; mode=block";
+    
+    # Proxy a la aplicación Coolify
+    location / {
+        proxy_pass http://v8g48ggkk8wko4480s8kk4ok.147.93.182.94.sslip.io;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+    }
+    
+    # Logs
+    access_log /var/log/nginx/imetrics.cl.access.log;
+    error_log /var/log/nginx/imetrics.cl.error.log;
+}
+```
+
+### **PASO 4: Habilitar el sitio**
+```bash
+ln -s /etc/nginx/sites-available/imetrics.cl /etc/nginx/sites-enabled/
+rm -f /etc/nginx/sites-enabled/default
+```
+
+### **PASO 5: Verificar y reiniciar nginx**
+```bash
+nginx -t
+systemctl restart nginx
+systemctl enable nginx
+```
+
+### **PASO 6: Instalar Certbot para SSL**
+```bash
+apt install -y certbot python3-certbot-nginx
+```
+
+### **PASO 7: Obtener certificado SSL**
+```bash
+certbot --nginx -d imetrics.cl -d www.imetrics.cl --non-interactive --agree-tos --email admin@imetrics.cl
+```
+
+### **PASO 8: Configurar renovación automática**
+```bash
+(crontab -l 2>/dev/null; echo "0 12 * * * /usr/bin/certbot renew --quiet") | crontab -
+```
+
+## ✅ **VERIFICACIÓN**
+
+Después de completar todos los pasos:
+```bash
+# Verificar que nginx funciona
+curl -I http://imetrics.cl
+
+# Verificar SSL
+curl -I https://imetrics.cl
+
+# Verificar que resuelve correctamente
+nslookup imetrics.cl
+```
+
+## 🎯 **RESULTADO ESPERADO**
+
+- ✅ `http://imetrics.cl` → redirige a `https://imetrics.cl`
+- ✅ `https://imetrics.cl` → `HTTP/2 200 OK`
+- ✅ La aplicación carga correctamente
+- ✅ SSL válido y renovación automática configurada
+
+---
+**Fecha**: 2025-12-27  
+**Tiempo estimado**: 15-20 minutos

@@ -1,0 +1,62 @@
+# 🚨 PROBLEMA REAL IDENTIFICADO: FALTA PROXY EN SERVIDOR
+
+## 🔍 **DIAGNÓSTICO CORRECTO**
+
+### **✅ Lo que SÍ funciona:**
+```
+curl http://v8g48ggkk8wko4480s8kk4ok.147.93.182.94.sslip.io
+HTTP/1.1 200 OK ✅
+```
+
+### **❌ Lo que NO funciona:**
+```
+curl http://147.93.182.94
+HTTP/1.1 404 Not Found ❌
+```
+
+## 🎯 **EL PROBLEMA REAL**
+
+**La aplicación está desplegada correctamente en Coolify, pero el servidor 147.93.182.94 NO tiene configurado un proxy para servir imetrics.cl**
+
+## 🔧 **SOLUCIÓN REQUERIDA**
+
+### **Configurar nginx proxy en el servidor 147.93.182.94:**
+
+```nginx
+server {
+    listen 80;
+    server_name imetrics.cl www.imetrics.cl;
+    
+    location / {
+        proxy_pass http://v8g48ggkk8wko4480s8kk4ok.147.93.182.94.sslip.io;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name imetrics.cl www.imetrics.cl;
+    
+    ssl_certificate /path/to/certificate;
+    ssl_certificate_key /path/to/private_key;
+    
+    location / {
+        proxy_pass http://v8g48ggkk8wko4480s8kk4ok.147.93.182.94.sslip.io;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+## 🚨 **CONCLUSIÓN**
+
+**El problema NO es DNS, sino que falta configurar el proxy en el servidor de producción.**
+
+---
+**Fecha**: 2025-12-27  
+**Estado**: Problema real identificado

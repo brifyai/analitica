@@ -1,0 +1,97 @@
+# Robots.txt optimizado para SEO de primer nivel
+# iMetrics - Análisis Inteligente de Métricas
+
+User-agent: *
+Allow: /
+Allow: /dashboard
+Allow: /analytics
+Allow: /spot-analysis
+Allow: /properties
+Allow: /frases-radio
+Allow: /login
+Allow: /register
+Allow: /privacy
+Allow: /terms
+Allow: /cookies
+
+# Archivos y recursos permitidos
+Allow: /static/
+Allow: /assets/
+Allow: /images/
+Allow: /icons/
+Allow: /fonts/
+Allow: /css/
+Allow: /js/
+Allow: /manifest.json
+Allow: /sitemap.xml
+Allow: /favicon.ico
+Allow: /robots.txt
+
+# Bloquear archivos sensibles
+Disallow: /admin/
+Disallow: /api/
+Disallow: /.env
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /build/
+Disallow: /dist/
+Disallow: /*.log
+Disallow: /*.tmp
+Disallow: /*.bak
+Disallow: /*.swp
+Disallow: /*.swo
+Disallow: /~
+
+# Crawl-delay para evitar sobrecarga
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://tvradio2.netlify.app/sitemap.xml
+
+# Host directive
+Host: https://tvradio2.netlify.app
+
+# User-agent specific rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 3
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+# Bloquear bots maliciosos
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Optimización para Core Web Vitals
+# Permitir recursos críticos para performance
+Allow: /critical-css.css
+Allow: /critical-js.js
+Allow: /preload-resources.js

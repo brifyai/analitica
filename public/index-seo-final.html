@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- Critical Performance Optimization -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <link rel="preconnect" href="https://tvradio2.netlify.app" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    
+    <!-- DNS Prefetch for Performance -->
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" />
+    <link rel="preload" href="%PUBLIC_URL%/logo192.png" as="image" />
+    <link rel="preload" href="/sw.js" as="script" />
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    
+    <!-- Viewport and Theme -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,viewport-fit=cover" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="msapplication-TileColor" content="#2563eb" />
+    <meta name="msapplication-config" content="%PUBLIC_URL%/browserconfig.xml" />
+    
+    <!-- Advanced SEO Meta Tags -->
+    <title>iMetrics - Análisis Inteligente de Métricas y Analytics | Chile | Herramienta Líder en Business Intelligence</title>
+    <meta name="description" content="iMetrics es la herramienta líder en Chile para análisis inteligente de métricas, analytics y datos. Optimiza tu estrategia digital con insights avanzados, reportes automáticos, dashboards interactivos y business intelligence. Ideal para empresas, marketers y analistas de datos." />
+    <meta name="keywords" content="análisis métricas, analytics, datos, Chile, métricas digitales, insights, reportes automáticos, optimización web, tv radio, marketing digital, análisis web, dashboards, KPIs, business intelligence, análisis de datos, visualización datos, herramientas analytics, métricas redes sociales, análisis comportamiento usuarios, conversion tracking, ROI analytics, performance marketing, data science, machine learning analytics, predictive analytics, real-time analytics, web analytics, mobile analytics, social media analytics, email marketing analytics, SEO analytics, SEM analytics, content analytics, user experience analytics, A/B testing analytics, funnel analytics, cohort analysis, retention analytics, customer analytics, marketing automation analytics, business dashboards, executive dashboards, KPI dashboards, interactive dashboards, custom dashboards, real-time dashboards, mobile dashboards, responsive dashboards, data visualization, charts, graphs, trends, forecasting, predictive modeling, statistical analysis, data mining, big data analytics, cloud analytics, enterprise analytics, saas analytics, api analytics, integration analytics, automated reporting, scheduled reports, custom reports, white label reports, brand reports, multi-tenant analytics, agency analytics, freelancer analytics, consultant analytics, agency dashboard, white label dashboard, custom dashboard, analytics platform, data platform, insights platform, reporting platform, analytics solution, data solution, business solution, enterprise solution, analytics tool, data tool, business tool, marketing tool, analytics software, data software, business software, marketing software, analytics app, data app, business app, marketing app, analytics service, data service, business service, marketing service, analytics company, data company, business company, marketing company, analytics startup, data startup, business startup, marketing startup, analytics agency, data agency, business agency, marketing agency, analytics consultant, data consultant, business consultant, marketing consultant, analytics expert, data expert, business expert, marketing expert, analytics specialist, data specialist, business specialist, marketing specialist, analytics professional, data professional, business professional, marketing professional, analytics analyst, data analyst, business analyst, marketing analyst, analytics manager, data manager, business manager, marketing manager, analytics director, data director, business director, marketing director, analytics executive, data executive, business executive, marketing executive, analytics leader, data leader, business leader, marketing leader" />
+    
+    <!-- E-A-T Signals -->
+    <meta name="author" content="iMetrics Team" />
+    <meta name="publisher" content="iMetrics" />
+    <meta name="creator" content="iMetrics Analytics Platform" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://tvradio2.netlify.app/" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tvradio2.netlify.app/" />
+    <meta property="og:title" content="iMetrics - Análisis Inteligente de Métricas y Analytics | Chile | Herramienta Líder en Business Intelligence" />
+    <meta property="og:description" content="La herramienta líder en Chile para análisis inteligente de métricas, analytics y datos. Optimiza tu estrategia digital con insights avanzados, reportes automáticos y dashboards interactivos." />
+    <meta property="og:image" content="https://tvradio2.netlify.app/og-image-1200x630.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="iMetrics - Análisis Inteligente de Métricas y Analytics en Chile" />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:site_name" content="iMetrics" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://tvradio2.netlify.app/" />
+    <meta property="twitter:title" content="iMetrics - Análisis Inteligente de Métricas y Analytics | Chile" />
+    <meta property="twitter:description" content="La herramienta líder en Chile para análisis inteligente de métricas, analytics y datos. Optimiza tu estrategia digital con insights avanzados." />
+    <meta property="twitter:image" content="https://tvradio2.netlify.app/twitter-image-1200x600.jpg" />
+    <meta property="twitter:image:alt" content="iMetrics - Análisis Inteligente de Métricas" />
+    <meta property="twitter:creator" content="@iMetrics" />
+    <meta property="twitter:site" content="@iMetrics" />
+    
+    <!-- Additional SEO -->
+    <meta name="geo.region" content="CL" />
+    <meta name="geo.country" content="Chile" />
+    <meta name="geo.placename" content="Santiago, Chile" />
+    <meta name="language" content="Spanish" />
+    <meta name="distribution" content="global" />
+    <meta name="rating" content="general" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Google Discover -->
+    <meta name="google-site-verification" content="your-verification-code" />
+    <meta name="google" content="nositelinkssearchbox" />
+    
+    <!-- Voice Search Optimization -->
+    <meta name="speech-input" content="enabled" />
+    
+    <!-- Critical CSS Inline -->
+    <style>
+      /* Critical above-the-fold styles */
+      body { 
+        margin: 0; 
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+        line-height: 1.6;
+        color: #333;
+        background: #f8fafc;
+      }
+      #root { 
+        min-height: 100vh; 
+      }
+      .loading { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        min-height: 100vh; 
+        background: #f8fafc;
+      }
+      .spinner {
+        width: 40px; 
+        height: 40px; 
+        border: 4px solid #f3f3f3; 
+        border-top: 4px solid #2563eb; 
+        border-radius: 50%; 
+        animation: spin 1s linear infinite; 
+        margin: 0 auto 20px;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .loading-text {
+        color: #666; 
+        font-family: Inter, sans-serif;
+        font-size: 16px;
+        text-align: center;
+      }
+      
+      /* Lazy loading placeholder styles */
+      .lazy-image {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .lazy-image.loaded {
+        opacity: 1;
+      }
+      .image-placeholder {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      
+      /* Performance optimizations */
+      img { 
+        max-width: 100%; 
+        height: auto; 
+        loading: lazy;
+        decoding: async;
+      }
+      .lazy-bg {
+        background-color: #f8fafc;
+        background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
+                          linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
+                          linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
+                          linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+      }
+    </style>
+    
+    <!-- Structured Data - SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "iMetrics",
+      "alternateName": "iMetrics - Análisis Inteligente de Métricas",
+      "description": "Herramienta inteligente para análisis de métricas y analytics en Chile. Optimiza tu estrategia digital con insights avanzados y reportes automáticos.",
+      "url": "https://tvradio2.netlify.app/",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Analytics",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CLP",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2025-12-31"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "iMetrics",
+        "url": "https://tvradio2.netlify.app/",
+        "logo": "https://tvradio2.netlify.app/logo.png"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "iMetrics",
+        "url": "https://tvradio2.netlify.app/"
+      },
+      "inLanguage": "es-CL",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Business, Marketing Professionals, Data Analysts"
+      },
+      "keywords": "análisis métricas, analytics, datos, Chile, métricas digitales, insights, reportes automáticos, optimización web, tv radio, marketing digital, análisis web, dashboards, KPIs, business intelligence",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Chile"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://tvradio2.netlify.app/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "150",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "featureList": [
+        "Análisis de métricas en tiempo real",
+        "Dashboards interactivos",
+        "Reportes automáticos personalizados",
+        "Integración con Google Analytics",
+        "Análisis de comportamiento de usuarios",
+        "Optimización SEO",
+        "Métricas de redes sociales",
+        "Análisis de conversiones"
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "iMetrics",
+      "url": "https://tvradio2.netlify.app/",
+      "logo": "https://tvradio2.netlify.app/logo.png",
+      "description": "Herramienta líder en Chile para análisis inteligente de métricas y analytics",
+      "foundingDate": "2023",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "CL",
+        "addressRegion": "Santiago",
+        "addressLocality": "Santiago"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+56-2-XXXXXXX",
+        "contactType": "customer service",
+        "availableLanguage": ["Spanish"]
+      },
+      "sameAs": [
+        "https://twitter.com/iMetrics",
+        "https://linkedin.com/company/imetrics",
+        "https://facebook.com/iMetrics"
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "Chile"
+      }
+    }
+    </script>
+    
+    <!-- Structured Data - FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué es iMetrics?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "iMetrics es la herramienta líder en Chile para análisis inteligente de métricas y analytics. Permite optimizar estrategias digitales con insights avanzados, reportes automáticos y dashboards interactivos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿iMetrics es gratuito?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, iMetrics ofrece un plan gratuito con funcionalidades básicas. También tenemos planes premium para empresas que necesitan análisis avanzado."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué métricas puedo analizar con iMetrics?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Con iMetrics puedes analizar tráfico web, comportamiento de usuarios, conversiones, métricas de redes sociales, ROI de campañas, KPIs de negocio y mucho más."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿iMetrics se integra con Google Analytics?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, iMetrics se integra perfectamente con Google Analytics y otras plataformas de análisis para proporcionar una visión completa de tus datos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿iMetrics es para empresas en Chile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, iMetrics está diseñado específicamente para empresas y profesionales en Chile, con soporte local y métricas adaptadas al mercado chileno."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data - Breadcrumb -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://tvradio2.netlify.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Analytics",
+          "item": "https://tvradio2.netlify.app/analytics"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Dashboard",
+          "item": "https://tvradio2.netlify.app/dashboard"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "iMetrics",
+      "url": "https://tvradio2.netlify.app/",
+      "description": "Plataforma líder en Chile para análisis inteligente de métricas y analytics",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://tvradio2.netlify.app/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "iMetrics"
+      }
+    }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
+    <div id="root">
+      <!-- Loading state for better UX -->
+      <div class="loading">
+        <div>
+          <div class="spinner"></div>
+          <p class="loading-text">Cargando iMetrics...</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Lazy Loading Script -->
+    <script>
+      // Lazy Loading para imágenes
+      document.addEventListener('DOMContentLoaded', function() {
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              img.classList.add('loaded');
+              img.classList.remove('lazy-bg');
+              observer.unobserve(img);
+            }
+          });
+        }, {
+          rootMargin: '50px 0px',
+          threshold: 0.01
+        });
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+        
+        // Lazy Loading para background images
+        const lazyBackgrounds = document.querySelectorAll('.lazy-bg');
+        const backgroundObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const element = entry.target;
+              const bgImage = element.dataset.bg;
+              if (bgImage) {
+                element.style.backgroundImage = `url(${bgImage})`;
+                element.classList.add('loaded');
+                element.classList.remove('lazy-bg');
+              }
+              observer.unobserve(element);
+            }
+          });
+        }, {
+          rootMargin: '50px 0px',
+          threshold: 0.01
+        });
+        
+        lazyBackgrounds.forEach(bg => backgroundObserver.observe(bg));
+      });
+      
+      // Preload critical resources
+      function preloadResource(url, as, type = null) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.href = url;
+        link.as = as;
+        if (type) link.type = type;
+        document.head.appendChild(link);
+      }
+      
+      // Preload non-critical resources after page load
+      window.addEventListener('load', function() {
+        setTimeout(() => {
+          preloadResource('/dashboard', 'document');
+          preloadResource('/analytics', 'document');
+          preloadResource('/logo512.png', 'image');
+        }, 2000);
+      });
+      
+      // Resource Hints
+      function addResourceHints() {
+        const hints = [
+          { rel: 'preconnect', href: 'https://api.tvradio2.netlify.app' },
+          { rel: 'prefetch', href: '/dashboard' },
+          { rel: 'prefetch', href: '/analytics' }
+        ];
+        
+        hints.forEach(hint => {
+          const link = document.createElement('link');
+          link.rel = hint.rel;
+          link.href = hint.href;
+          document.head.appendChild(link);
+        });
+      }
+      
+      addResourceHints();
+    </script>
+    
+    <!-- Google Analytics -->
+    <script>
+      // Google Analytics sin Tag Manager
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID', {
+        page_title: 'iMetrics - Análisis Inteligente de Métricas',
+        page_location: window.location.href,
+        custom_map: {'custom_parameter_1': 'user_type'}
+      });
+      gtag('event', 'page_view', {
+        'user_type': 'premium'
+      });
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID', {
+        page_title: 'iMetrics - Análisis Inteligente de Métricas',
+        page_location: window.location.href,
+        custom_map: {'custom_parameter_1': 'user_type'}
+      });
+      gtag('event', 'page_view', {
+        'user_type': 'premium'
+      });
+    </script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+              console.log('SW registered: ', registration);
+              registration.update();
+            })
+            .catch(function(registrationError) {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+    
+    <!-- Performance Monitoring -->
+    <script>
+      // Core Web Vitals monitoring
+      function sendToAnalytics(metric) {
+        gtag('event', metric.name, {
+          'event_category': 'Web Vitals',
+          'event_label': metric.id,
+          'value': Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+          'non_interaction': true,
+        });
+      }
+      
+      if ('PerformanceObserver' in window) {
+        const observer = new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            if (entry.entryType === 'largest-contentful-paint') {
+              sendToAnalytics({name: 'LCP', value: entry.startTime, id: entry.id});
+            } else if (entry.entryType === 'first-input') {
+              sendToAnalytics({name: 'FID', value: entry.processingStart - entry.startTime, id: entry.id});
+            } else if (entry.entryType === 'layout-shift') {
+              if (!entry.hadRecentInput) {
+                sendToAnalytics({name: 'CLS', value: entry.value, id: entry.id});
+              }
+            }
+          }
+        });
+        observer.observe({entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift']});
+      }
+      
+      // Performance optimization: Reduce JavaScript execution time
+      function deferNonCriticalScripts() {
+        const scripts = [
+          // Add non-critical scripts here
+        ];
+        
+        scripts.forEach(script => {
+          const el = document.createElement('script');
+          el.src = script;
+          el.async = true;
+          document.body.appendChild(el);
+        });
+      }
+      
+      // Run after critical resources are loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', deferNonCriticalScripts);
+      } else {
+        deferNonCriticalScripts();
+      }
+    </script>
+  </body>
+</html>

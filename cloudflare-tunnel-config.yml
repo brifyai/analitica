@@ -1,0 +1,9 @@
+tunnel: tv-radio-ssl
+credentials-file: tunnel-credentials.json
+
+ingress:
+  - hostname: tvradio.alegria.dev
+    service: http://localhost:3001
+  - hostname: v8g48ggkk8wko4480s8kk4ok.147.93.182.94.sslip.io
+    service: http://localhost:3001
+  - service: http_status:404

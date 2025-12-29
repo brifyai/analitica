@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Script para configurar SSL con Let's Encrypt para imetrics.cl
+# Ejecutar en el servidor 147.93.182.94 con permisos de root
+
+echo "🔐 Configurando SSL con Let's Encrypt para imetrics.cl..."
+
+# Instalar Certbot si no está instalado
+if ! command -v certbot &> /dev/null; then
+    echo "📦 Instalando Certbot..."
+    apt update
+    apt install -y certbot python3-certbot-nginx
+fi
+
+# Verificar que nginx esté configurado
+if [ ! -f "/etc/nginx/sites-enabled/imetrics.cl" ]; then
+    echo "❌ Error: Configuración nginx no encontrada. Ejecuta primero configurar-nginx-imetrics.sh"
+    exit 1
+fi
+
+# Obtener certificado SSL
+echo "🔑 Obteniendo certificado SSL..."
+certbot --nginx -d imetrics.cl -d www.imetrics.cl --non-interactive --agree-tos --email admin@imetrics.cl
+
+if [ $? -eq 0 ]; then
+    echo "✅ Certificado SSL configurado exitosamente"
+    
+    # Configurar renovación automática
+    echo "🔄 Configurando renovación automática..."
+    (crontab -l 2>/dev/null; echo "0 12 * * * /usr/bin/certbot renew --quiet") | crontab -
+    
+    echo "✅ SSL configurado y renovación automática activada"
+else
+    echo "❌ Error al configurar SSL"
+    exit 1
+fi
+
+echo "🎯 ¡Configuración SSL completada!"

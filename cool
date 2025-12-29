@@ -1,0 +1,257 @@
+#!/usr/bin/env node
+
+/**
+ * DIAGNÓSTICO Y CORRECCIÓN HTTPS PARA COOLIFY
+ * 
+ * Este script analiza y corrige problemas de HTTP vs HTTPS en Coolify
+ * para resolver problemas OAuth con Google Analytics
+ */
+
+const fs = require('fs');
+const path = require('path');
+const https = require('https');
+const http = require('http');
+
+class CoolifyHttpsDiagnostic {
+  constructor() {
+    this.coolifyDomain = 'v8g48ggkk8wko4480s8kk4ok.147.93.182.94.sslip.io';
+    this.currentUrl = `http://${this.coolifyDomain}`;
+    this.expectedUrl = `https://${this.coolifyDomain}`;
+    this.results = {
+      httpStatus: null,
+      httpsStatus: null,
+      sslValid: false,
+      redirectToHttps: false,
+      oauthUrls: []
+    };
+  }
+
+  async diagnose() {
+    console.log('🔍 DIAGNÓSTICO HTTPS COOLIFY');
+    console.log('=====================================');
+    
+    try {
+      // 1. Verificar HTTP actual
+      await this.checkHttpStatus();
+      
+      // 2. Verificar HTTPS
+      await this.checkHttpsStatus();
+      
+      // 3. Verificar redirección HTTP->HTTPS
+      await this.checkHttpToHttpsRedirect();
+      
+      // 4. Generar URLs OAuth correctas
+      this.generateOAuthUrls();
+      
+      // 5. Mostrar resultados
+      this.showResults();
+      
+      // 6. Proporcionar soluciones
+      this.provideSolutions();
+      
+    } catch (error) {
+      console.error('❌ Error en diagnóstico:', error.message);
+    }
+  }
+
+  async checkHttpStatus() {
+    console.log('\n📡 Verificando HTTP actual...');
+    
+    return new Promise((resolve, reject) => {
+      const req = http.get(this.currentUrl, (res) => {
+        this.results.httpStatus = res.statusCode;
+        console.log(`   HTTP Status: ${res.statusCode}`);
+        console.log(`   Headers:`, res.headers);
+        resolve(res);
+      });
+      
+      req.on('error', (error) => {
+        console.log(`   ❌ Error HTTP: ${error.message}`);
+        this.results.httpStatus = 'ERROR';
+        resolve(null);
+      });
+      
+      req.setTimeout(10000, () => {
+        console.log('   ⏰ Timeout HTTP');
+        this.results.httpStatus = 'TIMEOUT';
+        req.destroy();
+        resolve(null);
+      });
+    });
+  }
+
+  async checkHttpsStatus() {
+    console.log('\n🔒 Verificando HTTPS...');
+    
+    return new Promise((resolve, reject) => {
+      const req = https.get(this.expectedUrl, (res) => {
+        this.results.httpsStatus = res.statusCode;
+        this.results.sslValid = true;
+        console.log(`   HTTPS Status: ${res.statusCode}`);
+        console.log(`   SSL Certificate: Válido`);
+        console.log(`   Protocol: HTTPS`);
+        resolve(res);
+      });
+      
+      req.on('error', (error) => {
+        console.log(`   ❌ Error HTTPS: ${error.message}`);
+        this.results.httpsStatus = 'ERROR';
+        this.results.sslValid = false;
+        resolve(null);
+      });
+      
+      req.setTimeout(10000, () => {
+        console.log('   ⏰ Timeout HTTPS');
+        this.results.httpsStatus = 'TIMEOUT';
+        req.destroy();
+        resolve(null);
+      });
+    });
+  }
+
+  async checkHttpToHttpsRedirect() {
+    console.log('\n🔄 Verificando redirección HTTP->HTTPS...');
+    
+    return new Promise((resolve, reject) => {
+      const req = http.get(this.currentUrl, (res) => {
+        const location = res.headers.location;
+        if (location && location.startsWith('https://')) {
+          this.results.redirectToHttps = true;
+          console.log(`   ✅ Redirección a HTTPS detectada: ${location}`);
+        } else {
+          this.results.redirectToHttps = false;
+          console.log(`   ❌ No hay redirección a HTTPS`);
+          console.log(`   Location header: ${location || 'No presente'}`);
+        }
+        resolve(res);
+      });
+      
+      req.on('error', (error) => {
+        console.log(`   ❌ Error en verificación de redirección: ${error.message}`);
+        resolve(null);
+      });
+      
+      req.setTimeout(10000, () => {
+        req.destroy();
+        resolve(null);
+      });
+    });
+  }
+
+  generateOAuthUrls() {
+    console.log('\n🔑 Generando URLs OAuth correctas...');
+    
+    const baseUrl = this.expectedUrl;
+    
+    this.results.oauthUrls = [
+      `${baseUrl}/callback`,
+      `${baseUrl}/auth/callback`,
+      `${baseUrl}/oauth/callback`,
+      `${baseUrl}/auth/google/callback`,
+      `${baseUrl}/analytics/callback`,
+      `${baseUrl}/auth/google/analytics/callback`,
+      `${baseUrl}/api/auth/callback`
+    ];
+    
+    console.log('   URLs OAuth generadas:');
+    this.results.oauthUrls.forEach((url, index) => {
+      console.log(`   ${index + 1}. ${url}`);
+    });
+  }
+
+  showResults() {
+    console.log('\n📊 RESULTADOS DEL DIAGNÓSTICO');
+    console.log('=====================================');
+    
+    console.log(`🌐 HTTP Status: ${this.results.httpStatus}`);
+    console.log(`🔒 HTTPS Status: ${this.results.httpsStatus}`);
+    console.log(`✅ SSL Válido: ${this.results.sslValid ? 'SÍ' : 'NO'}`);
+    console.log(`🔄 Redirección HTTPS: ${this.results.redirectToHttps ? 'SÍ' : 'NO'}`);
+    
+    // Determinar estado general
+    if (this.results.httpsStatus === 200 && this.results.sslValid) {
+      console.log('\n🎉 ESTADO: HTTPS FUNCIONANDO CORRECTAMENTE');
+    } else if (this.results.redirectToHttps) {
+      console.log('\n⚠️  ESTADO: REDIRECCIÓN CONFIGURADA, PERO HTTPS NO RESPONDE');
+    } else {
+      console.log('\n❌ ESTADO: PROBLEMA HTTPS DETECTADO');
+    }
+  }
+
+  provideSolutions() {
+    console.log('\n🛠️  SOLUCIONES RECOMENDADAS');
+    console.log('=====================================');
+    
+    if (this.results.httpsStatus !== 200 || !this.results.sslValid) {
+      console.log('\n🔧 OPCIÓN 1: Configurar HTTPS en Coolify');
+      console.log('1. Ir a Coolify Dashboard');
+      console.log('2. Seleccionar tu proyecto TV-radio');
+      console.log('3. Ir a Settings > Advanced');
+      console.log('4. Activar "Force HTTPS"');
+      console.log('5. Guardar y redesplegar');
+      
+      console.log('\n🔧 OPCIÓN 2: Usar Cloudflare Tunnel');
+      console.log('1. Instalar cloudflared en Coolify');
+      console.log('2. Configurar tunnel con HTTPS');
+      console.log('3. Actualizar DNS en Cloudflare');
+      
+      console.log('\n🔧 OPCIÓN 3: Configurar Reverse Proxy');
+      console.log('1. Instalar Traefik en Coolify');
+      console.log('2. Configurar certificados SSL automáticos');
+      console.log('3. Redirigir tráfico a tu aplicación');
+    }
+    
+    console.log('\n🔑 URLs PARA GOOGLE CLOUD CONSOLE:');
+    console.log('=====================================');
+    console.log('Authorized redirect URIs:');
+    this.results.oauthUrls.forEach(url => {
+      console.log(`   ${url}`);
+    });
+    
+    console.log('\nAuthorized JavaScript origins:');
+    console.log(`   ${this.expectedUrl}`);
+  }
+
+  async testOAuthFlow() {
+    console.log('\n🧪 PROBANDO FLUJO OAUTH');
+    console.log('=====================================');
+    
+    const testUrls = [
+      `${this.expectedUrl}/callback`,
+      `${this.expectedUrl}/auth/callback`
+    ];
+    
+    for (const url of testUrls) {
+      try {
+        console.log(`Probando: ${url}`);
+        const response = await fetch(url);
+        console.log(`   Status: ${response.status}`);
+        console.log(`   Headers:`, Object.fromEntries(response.headers.entries()));
+      } catch (error) {
+        console.log(`   Error: ${error.message}`);
+      }
+    }
+  }
+}
+
+// Ejecutar diagnóstico
+async function main() {
+  const diagnostic = new CoolifyHttpsDiagnostic();
+  await diagnostic.diagnose();
+  await diagnostic.testOAuthFlow();
+  
+  console.log('\n✅ DIAGNÓSTICO COMPLETADO');
+  console.log('=====================================');
+  console.log('📋 Próximos pasos:');
+  console.log('1. Revisar las soluciones recomendadas arriba');
+  console.log('2. Configurar HTTPS en Coolify');
+  console.log('3. Actualizar URLs en Google Cloud Console');
+  console.log('4. Probar OAuth nuevamente');
+}
+
+// Ejecutar si se llama directamente
+if (require.main === module) {
+  main().catch(console.error);
+}
+
+module.exports = CoolifyHttpsDiagnostic;

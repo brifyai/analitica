@@ -1,0 +1,54 @@
+# 🔧 SOLUCIÓN: CLOUDFLARE NO HACE PROXY CORRECTO
+
+## 🚨 **PROBLEMA CONFIRMADO**
+```
+DNS esperado: 147.93.182.94 (servidor Coolify)
+DNS actual:   172.67.139.6, 104.21.46.128 (IPs Cloudflare)
+```
+
+## 🔧 **SOLUCIONES APLICAR**
+
+### **Solución 1: Purgar caché de Cloudflare**
+1. **Cloudflare Dashboard** → **imetrics.cl**
+2. **Purgar caché** → **Purgar todo**
+3. Esperar 5-10 minutos
+
+### **Solución 2: Verificar configuración de proxy**
+En Cloudflare DNS:
+```
+✅ Tipo: A
+✅ Nombre: imetrics.cl  
+✅ Contenido: 147.93.182.94
+✅ Proxy: ACTIVADO (naranja)
+```
+
+### **Solución 3: Desactivar proxy temporalmente**
+1. Cambiar proxy a "DNS only" (gris)
+2. Verificar que resuelve a 147.93.182.94
+3. Reactivar proxy después
+
+### **Solución 4: Forzar propagación DNS**
+```bash
+# Verificar propagación global
+dig imetrics.cl @8.8.8.8
+dig imetrics.cl @1.1.1.1
+```
+
+## ⚡ **VERIFICACIÓN**
+```bash
+# Debe devolver 147.93.182.94
+nslookup imetrics.cl
+
+# Debe devolver HTTP/2 200 OK
+curl -I https://imetrics.cl
+```
+
+## 🎯 **RESULTADO ESPERADO**
+Después de aplicar la solución:
+- ✅ `nslookup imetrics.cl` → `147.93.182.94`
+- ✅ `https://imetrics.cl` → `HTTP/2 200 OK`
+- ✅ La aplicación carga correctamente
+
+---
+**Fecha**: 2025-12-27  
+**Prioridad**: CRÍTICA - Aplicar inmediatamente

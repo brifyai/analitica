@@ -1,0 +1,3 @@
+// AUTO-GENERADO - Cache Busting
+export const BUILD_VERSION = '1766587986015';
+export const BUILD_DATE = '2025-12-24T14:53:06.016Z';
