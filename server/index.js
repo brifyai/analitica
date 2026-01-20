@@ -94,7 +94,7 @@ app.get('/api/properties/:accountId', verifyAuthToken, async (req, res) => {
 });
 
 // Analytics Proxy (Reemplaza netlify/functions/analytics-proxy.js)
-app.all('/api/analytics-proxy*', verifyAuthToken, async (req, res) => {
+app.all('/api/analytics-proxy/*', verifyAuthToken, async (req, res) => {
   // Extraer el path relativo después de /api/analytics-proxy
   // Ejemplo: /api/analytics-proxy/v1beta/properties/X:runReport -> /v1beta/properties/X:runReport
   const match = req.path.match(/\/api\/analytics-proxy(.*)/);
