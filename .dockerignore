@@ -57,3 +57,42 @@ RE
 SOL
 UR
 CONFIG
+
+# Archivos de documentación (no necesarios en el build)
+*.md
+!README.md
+*.txt
+*.sql
+
+# Archivos de configuración local
+.env.*
+*.key
+*.pem
+ssl
+cloudflared
+cloud
+cool
+nginx
+nginx.conf
+nginx-https.conf
+
+# Scripts de desarrollo
+*.sh
+clear-*.js
+cache-*.js
+check-*.js
+configurar-*.js
+debug-*.js
+ssl-*.js
+verificar-*.js
+cloudflare-*.js
+cloudflare-*.yml
+
+# Archivos temporales
+*.zip
+GU
+PRO
+RE
+SOL
+UR
+CONFIG

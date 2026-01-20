@@ -51,3 +51,21 @@ temp/
 *.sqlcloudflared
 cloudflared.tar.gz
 cloudflared.tgz
+
+# Archivos binarios grandes
+*.zip
+*.tar.gz
+*.rar
+*.exe
+
+# Archivos temporales del proyecto
+cloud
+cool
+nginx
+ssl
+GU
+PRO
+RE
+SOL
+UR
+CONFIG
