@@ -140,7 +140,8 @@ const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.static(buildPath));
 
 // Manejar SPA (cualquier ruta no capturada por API o estáticos devuelve index.html)
-app.get('*', (req, res) => {
+// Express 5 requiere regex en lugar de wildcard simple
+app.get(/^\/.*/, (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 
