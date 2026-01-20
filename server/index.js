@@ -94,13 +94,13 @@ app.get('/api/properties/:accountId', verifyAuthToken, async (req, res) => {
 });
 
 // Analytics Proxy (Reemplaza netlify/functions/analytics-proxy.js)
-// Express 5 requiere sintaxis diferente para wildcards
-app.all(/^\/api\/analytics-proxy\/(.*)/, verifyAuthToken, async (req, res) => {
+app.all('/api/analytics-proxy/*', verifyAuthToken, async (req, res) => {
   // Extraer el path relativo después de /api/analytics-proxy
   // Ejemplo: /api/analytics-proxy/v1beta/properties/X:runReport -> /v1beta/properties/X:runReport
-  const targetPath = '/' + (req.params[0] || '');
+  const match = req.path.match(/\/api\/analytics-proxy(.*)/);
+  const targetPath = match ? match[1] : '';
   
-  if (!targetPath || targetPath === '/') {
+  if (!targetPath) {
       // Si no hay path extra, intentamos ver si el usuario quería llamar a la raíz de la API (raro)
       // O quizás es un error.
       // Pero por compatibilidad, si targetPath está vacío, podríamos intentar usar la URL base.
@@ -140,8 +140,7 @@ const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.static(buildPath));
 
 // Manejar SPA (cualquier ruta no capturada por API o estáticos devuelve index.html)
-// Express 5 requiere regex en lugar de wildcard simple
-app.get(/^\/.*/, (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 
