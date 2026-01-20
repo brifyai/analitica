@@ -1,0 +1,19 @@
+REBUILD TRIGGER - Fix Analytics Proxy Route
+===========================================
+
+Fecha: 20 de Enero 2026
+Commit: 281dd13
+
+CAMBIO CRÍTICO:
+- Corregida sintaxis de ruta wildcard en server/index.js
+- Cambio: /api/analytics-proxy* → /api/analytics-proxy/*
+- Soluciona: PathError en path-to-regexp
+
+ACCIÓN REQUERIDA:
+1. Este archivo fuerza un rebuild en Coolify/Easypanel
+2. El servidor debe reconstruirse con el nuevo código
+3. Después del rebuild, el error PathError desaparecerá
+
+VERIFICACIÓN POST-DEPLOY:
+- El servidor debe iniciar sin errores de PathError
+- La ruta /api/analytics-proxy/* debe funcionar correctamente
